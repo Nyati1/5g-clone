@@ -93,7 +93,7 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: env/prod
+          - branch: env/staging
             path: ./src
       - uses: copy
         config:
