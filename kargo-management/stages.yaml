@@ -54,10 +54,11 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: main
+          - branch: env/staging
             path: ./src
       - uses: copy
         config:
+          # Note: We pull source from main but push to env/staging
           inPath: ./src/env/dev/kustomization.yaml
           outPath: ./src/env/staging/kustomization.yaml
       - uses: git-commit
@@ -68,7 +69,7 @@ spec:
       - uses: git-push
         config:
           path: ./src
-          targetBranch: main
+          targetBranch: env/staging
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
@@ -92,7 +93,7 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: main
+          - branch: env/prod
             path: ./src
       - uses: copy
         config:
@@ -106,4 +107,4 @@ spec:
       - uses: git-push
         config:
           path: ./src
-          targetBranch: main
+          targetBranch: env/prod
