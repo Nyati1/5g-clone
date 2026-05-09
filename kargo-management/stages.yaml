@@ -54,7 +54,7 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: env/staging
+          - branch: main
             path: ./src
       - uses: copy
         config:
