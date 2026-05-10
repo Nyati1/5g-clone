@@ -45,32 +45,49 @@ spec:
     sources:
       stages: [dev]
   promotionTemplate:
-    spec:
-      vars:
-      - name: gitRepo
-        value: https://github.com/Nyati1/5g-clone.git
-      steps: # Single steps header
-      - uses: git-clone
-        config:
-          repoURL: ${{ vars.gitRepo }}
-          checkout:
-          - branch: env/dev
-            path: ./dev  
-          - branch: env/staging
-            path: ./stage    
-      - uses: copy
-        config:
-          inPath: ./dev/env/dev/kustomization.yaml
-          outPath: ./stage/env/staging/kustomization.yaml
-      - uses: git-commit
-        as: commit
-        config:
-          path: ./stage
-          message: "Promote dev config to staging"
-      - uses: git-push
-        config:
-          path: ./stage
-          targetBranch: env/staging
+  spec:
+    vars:
+    - name: gitRepo
+      value: https://github.com/Nyati1/5g-clone.git
+
+    steps:
+    - uses: git-clone
+      config:
+        repoURL: ${{ vars.gitRepo }}
+        checkout:
+        - branch: main
+          path: ./src
+        - branch: env/staging
+          create: true
+          path: ./out
+
+    - uses: git-clear
+      config:
+        path: ./out
+
+    - uses: kustomize-build
+      config:
+        path: ./src/env/staging
+        outPath: ./out/manifests.yaml
+
+    - uses: git-commit
+      as: commit
+      config:
+        path: ./out
+        message: "Render staging manifests"
+
+    - uses: git-push
+      config:
+        path: ./out
+        targetBranch: env/staging
+
+    - uses: argocd-update
+      config:
+        apps:
+        - name: core-1-staging
+          sources:
+          - repoURL: ${{ vars.gitRepo }}
+            desiredRevision: ${{ outputs.commit.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
