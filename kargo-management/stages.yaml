@@ -54,12 +54,12 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: main
+          - branch: env/staging
             path: ./src
       - uses: copy
         config:
           # Note: We pull source from main but push to env/staging
-          inPath: ./src/env/dev/kustomization.yaml
+          inPath: env/dev/kustomization.yaml
           outPath: ./src/env/staging/kustomization.yaml
       - uses: git-commit
         as: commit

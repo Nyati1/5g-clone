@@ -3,39 +3,32 @@ kind: ApplicationSet
 metadata:
   name: 5g-simulation-deployments
   namespace: argocd
-
 spec:
   generators:
     - list:
         elements:
           - env: dev
             project: default
+            branch: main
           - env: staging
             project: default
+            branch: env/staging
           - env: prod
             project: default
-
+            branch: env/prod
   template:
     metadata:
       name: 'core-1-{{env}}'
-
     spec:
       project: '{{project}}'
-
       source:
-        repoURL: https://github.com/Nyati1/5g-simulation-v3.git
-        targetRevision: main
+        repoURL: https://github.com/Nyati1/5g-clone.git
+        targetRevision: '{{branch}}'
         path: 'env/{{env}}'
-
       destination:
-        name: kargo-quickstart
+        name: in-cluster
         namespace: '5g-core-1-{{env}}'
-
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-
-
-
-
