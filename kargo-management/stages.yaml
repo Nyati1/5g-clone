@@ -59,7 +59,7 @@ spec:
       - uses: copy
         config:
           # Note: We pull source from main but push to env/staging
-          inPath: env/dev/kustomization.yaml
+          inPath: ./env/dev/kustomization.yaml
           outPath: ./src/env/staging/kustomization.yaml
       - uses: git-commit
         as: commit
@@ -93,11 +93,11 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: env/staging
+          - branch: env/prod
             path: ./src
       - uses: copy
         config:
-          inPath: ./src/env/staging/kustomization.yaml
+          inPath: ./env/staging/kustomization.yaml
           outPath: ./src/env/prod/kustomization.yaml
       - uses: git-commit
         as: commit
