@@ -46,6 +46,14 @@ spec:
       stages: [dev]
   promotionTemplate:
     spec:
+      steps:
+      - uses: shell
+        config:
+          # This command lists all files in the Kargo temporary workspace
+          run: |
+            echo "--- CURRENT WORKSPACE FILES ---"
+            find . -maxdepth 3 -not -path '*/.*'
+            echo "--------------------------------"
       vars:
       - name: gitRepo
         value: https://github.com/Nyati1/5g-clone.git
@@ -59,7 +67,7 @@ spec:
       - uses: copy
         config:
           # Note: We pull source from main but push to env/staging
-          inPath: ./env/dev/kustomization.yaml
+          inPath: env/dev/kustomization.yaml
           outPath: ./src/env/staging/kustomization.yaml
       - uses: git-commit
         as: commit
