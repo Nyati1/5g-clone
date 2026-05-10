@@ -55,7 +55,7 @@ spec:
           repoURL: ${{ vars.gitRepo }}
           checkout:
           - branch: env/staging
-            path: ./src
+            path: ./src    
       - uses: copy
         config:
           inPath: ./src/env/dev/kustomization.yaml
@@ -92,18 +92,21 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
+          - branch: env/staging
+            path: ./staging
+
           - branch: env/prod
-            path: ./src
+            path: ./prod
       - uses: copy
         config:
-          inPath: ./src/env/staging/kustomization.yaml
-          outPath: ./src/env/prod/kustomization.yaml
+          inPath: ./staging/env/staging/kustomization.yaml
+          outPath: ./prod/env/prod/kustomization.yaml
       - uses: git-commit
         as: commit
         config:
-          path: ./src
+          path: ./prod
           message: Promote staging config to prod
       - uses: git-push
         config:
-          path: ./src
+          path: ./prod
           targetBranch: env/prod
