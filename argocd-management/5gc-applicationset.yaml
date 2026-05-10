@@ -23,7 +23,7 @@ spec:
       project: '{{project}}'
 
       source:
-        repoURL: https://github.com/Nyati1/5g-simulation-v3.git
+        repoURL: https://github.com/Nyati1/5g-clone.git
         targetRevision: main
         path: 'env/{{env}}'
 

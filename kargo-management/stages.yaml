@@ -14,7 +14,7 @@ spec:
     spec:
       vars:
       - name: gitRepo
-        value: https://github.com/Nyati1/5g-simulation-v3.git
+        value: https://github.com/Nyati1/5g-clone.git
       steps:
       - uses: git-clone
         config:
@@ -48,7 +48,7 @@ spec:
     spec:
       vars:
       - name: gitRepo
-        value: https://github.com/Nyati1/5g-simulation-v3.git
+        value: https://github.com/Nyati1/5g-clone.git
       steps:
       - uses: git-clone
         config:
@@ -86,7 +86,7 @@ spec:
     spec:
       vars:
       - name: gitRepo
-        value: https://github.com/Nyati1/5g-simulation-v3.git
+        value: https://github.com/Nyati1/5g-clone.git
       steps:
       - uses: git-clone
         config:
