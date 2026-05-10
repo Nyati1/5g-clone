@@ -54,20 +54,22 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
+          - branch: env/dev
+            path: ./dev  
           - branch: env/staging
-            path: ./src    
+            path: ./stage    
       - uses: copy
         config:
-          inPath: ./src/env/dev/kustomization.yaml
-          outPath: ./src/env/staging/kustomization.yaml
+          inPath: ./dev/env/dev/kustomization.yaml
+          outPath: ./stage/env/staging/kustomization.yaml
       - uses: git-commit
         as: commit
         config:
-          path: ./src
+          path: ./stage
           message: "Promote dev config to staging"
       - uses: git-push
         config:
-          path: ./src
+          path: ./stage
           targetBranch: env/staging
 ---
 apiVersion: kargo.akuity.io/v1alpha1
