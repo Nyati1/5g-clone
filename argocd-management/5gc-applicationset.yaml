@@ -9,7 +9,7 @@ spec:
         elements:
           - env: dev
             project: default
-            branch: main
+            branch: env/dev
           - env: staging
             project: default
             branch: env/staging
