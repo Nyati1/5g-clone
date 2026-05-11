@@ -11,5 +11,5 @@ configMapGenerator:
     - mcc="2000"
     - mnc="204"
 replicas:
-  - name : amf-deployment.yaml  
+  - name : amf-deployment  
     count: 3
